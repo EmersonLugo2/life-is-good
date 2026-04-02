@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Cumpleaños, Katerine 🌿</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Sacramento&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde-oscuro: #2d4a3e;
+    --verde-medio:  #4a7c6a;
+    --verde-salvia: #7aab90;
+    --verde-claro:  #b8d4c4;
+    --beige:        #f5efe6;
+    --crema:        #fdf8f0;
+    --rosa:         #d4a5a0;
+    --dorado:       #c9a96e;
+    --cafe:         #8b6f5e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--crema);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+  }
+
+  #canvas-hojas {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 5;
+  }
+
+  /* ═══════════════════════════════
+     INTRO
+  ═══════════════════════════════ */
+  #intro {
+    position: fixed; inset: 0;
+    background: var(--verde-oscuro);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 1000;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+  }
+  #intro.oculto { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .flores-intro { font-size: 3rem; margin-bottom: 1.5rem; animation: florecer 2s ease forwards; }
+  @keyframes florecer {
+    0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+    70%  { transform: scale(1.2) rotate(5deg); }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+  }
+.btn-abrir {
+  animation: aparecer 1s ease 3.8s forwards, pulso 2s infinite 5s;
+}
+
+@keyframes pulso {
+  0%,100% { transform: scale(1); }
+  50%     { transform: scale(1.05); }
+}
+.flores-intro span {
+  display: inline-block;
+  animation: florecer 1.2s ease forwards, flotar 3s ease-in-out infinite;
+}
+
+/* delays para que no se muevan igual */
+.flores-intro span:nth-child(1) { animation-delay: 0s, 1.2s; }
+.flores-intro span:nth-child(2) { animation-delay: 0.2s, 1.4s; }
+.flores-intro span:nth-child(3) { animation-delay: 0.4s, 1.6s; }
+  .texto-intro {
+    font-family: 'Sacramento', cursive;
+    font-size: 2.8rem; color: var(--verde-claro);
+    overflow: hidden; white-space: nowrap;
+    border-right: 2px solid var(--dorado); width: 0;
+    animation: typing 2.5s steps(20) 0.8s forwards, blink 0.8s step-end infinite;
+  }
+  @keyframes typing { to { width: 14ch; } }
+  @keyframes blink   { 50% { border-color: transparent; } }
+
+  .btn-abrir {
+    margin-top: 3rem; padding: 0.9rem 2.5rem;
+    background: transparent; border: 1.5px solid var(--dorado);
+    color: var(--dorado); font-family: 'Jost', sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase;
+    cursor: pointer; opacity: 0;
+    animation: aparecer 1s ease 3.8s forwards;
+    transition: all 0.3s;
+  }
+  .btn-abrir:hover { background: var(--dorado); color: var(--verde-oscuro); }
+  @keyframes aparecer { to { opacity: 1; } }
+
+  /* ═══════════════════════════════
+     MAIN / HERO
+  ═══════════════════════════════ */
+  main { position: relative; z-index: 1; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 4rem 2rem;
+    background: linear-gradient(180deg, #e8f0eb 0%, var(--crema) 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(ellipse at 20% 30%, rgba(122,171,144,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 70%, rgba(212,165,160,0.12) 0%, transparent 55%);
+  }
+  .deco-hero   { font-size: 1.2rem; letter-spacing: 0.5em; color: var(--verde-salvia); margin-bottom: 1rem; animation: fadeUp 1s ease 0.2s both; }
+  .nombre-hero { font-family: 'Sacramento', cursive; font-size: clamp(4rem,12vw,8rem); color: var(--verde-oscuro); line-height: 1; animation: fadeUp 1s ease 0.4s both; }
+  .linea-deco  { width: 80px; height: 1px; background: linear-gradient(90deg,transparent,var(--dorado),transparent); margin: 1.5rem auto; animation: fadeUp 1s ease 0.6s both; }
+  .sub-hero    { font-size: clamp(1rem,2.5vw,1.25rem); color: var(--cafe); font-style: italic; font-weight: 300; max-width: 480px; line-height: 1.9; animation: fadeUp 1s ease 0.8s both; }
+  .emojis-hero { font-size: 1.8rem; margin-top: 2rem; letter-spacing: 0.5rem; animation: fadeUp 1s ease 1s both; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ═══════════════════════════════
+     ADMIRO
+  ═══════════════════════════════ */
+  .seccion { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .titulo-sec { font-family: 'Sacramento', cursive; font-size: clamp(2.2rem,5vw,3.5rem); color: var(--verde-oscuro); text-align: center; margin-bottom: 0.4rem; }
+  .sub-sec    { text-align: center; color: var(--verde-medio); font-style: italic; font-size: 1.2rem; margin-bottom: 3rem; }
+
+  .cards-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+  .card {
+    background: white; border: 1px solid var(--verde-claro);
+    padding: 2rem 1.5rem; width: 170px; text-align: center;
+    box-shadow: 4px 4px 0 var(--verde-claro);
+    transition: transform 0.3s, box-shadow 0.3s;
+    opacity: 0; transform: translateY(20px);
+  }
+  .card.vis { animation: cardUp 0.5s ease forwards; }
+  @keyframes cardUp { to { opacity: 1; transform: translateY(0); } }
+  .card:hover { transform: translateY(-6px) rotate(1deg); box-shadow: 6px 8px 0 var(--verde-salvia); }
+  .card .ic { font-size: 2rem; margin-bottom: 0.7rem; }
+  .card .tx { font-style: italic; font-size: 1.05rem; color: var(--verde-oscuro); }
+
+  /* ═══════════════════════════════
+     ÁLBUM — fondo y títulos
+  ═══════════════════════════════ */
+  .album-wrap {
+    background: var(--verde-oscuro);
+    padding: 5rem 2rem 6rem;
+    position: relative; overflow: hidden;
+  }
+  .album-wrap::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%234a7c6a' fill-opacity='0.12'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .album-tit { font-family: 'Sacramento', cursive; font-size: clamp(2.2rem,5vw,3.5rem); color: var(--verde-claro); text-align: center; margin-bottom: 0.4rem; position: relative; z-index: 1; }
+  .album-sub { text-align: center; color: var(--verde-salvia); font-style: italic; font-size: 0.95rem; margin-bottom: 3.5rem; position: relative; z-index: 1; }
+
+  /* ── Tablero disperso ── */
+  .tablero {
+    position: relative; max-width: 1050px;
+    margin: 0 auto; min-height: 620px; z-index: 1;
+  }
+
+  .coleccion {
+    position: absolute; width: 200px;
+    background: var(--crema);
+    padding: 0.65rem 0.65rem 3rem;
+    box-shadow: 4px 6px 24px rgba(0,0,0,0.4);
+    cursor: pointer;
+    transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), box-shadow 0.35s ease;
+    user-select: none;
+  }
+  .coleccion:hover { box-shadow: 10px 16px 40px rgba(0,0,0,0.55); z-index: 20; }
+
+  .col-portada {
+    width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block;
+    transition: filter 0.3s; background: var(--beige);
+  }
+  .coleccion:hover .col-portada { filter: brightness(1.07); }
+
+.marco-cumple {
+  padding: 8px;
+  border-radius: 15px;
+  background: linear-gradient(45deg, #ff7eb3, #ffcc70, #7afcff);
+  display: inline-block;
+}
+
+.col-portada1 {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+}
+  .col-emoji {
+    width: 100%; aspect-ratio: 1/1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem; background: var(--beige);
+  }
+
+  .col-nombre {
+    font-family: 'Sacramento', cursive; font-size: 1.4rem;
+    color: var(--cafe); text-align: center;
+    padding-top: 0.5rem; line-height: 1.2;
+  }
+  .col-cant {
+    font-family: 'Jost', sans-serif; font-weight: 300;
+    font-size: 0.7rem; letter-spacing: 0.12em;
+    color: var(--verde-medio); text-align: center;
+    text-transform: uppercase; margin-top: 0.15rem;
+  }
+  #yt-player video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+  .col-cinta {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    width: 46px; height: 20px;
+    background: rgba(201,169,110,0.3);
+    border: 1px solid rgba(201,169,110,0.5); border-radius: 2px;
+  }
+  .col-hint {
+    position: absolute; bottom: 0.5rem; left: 0; right: 0;
+    text-align: center; font-family: 'Jost', sans-serif;
+    font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--verde-medio); opacity: 0; transition: opacity 0.3s;
+  }
+  .coleccion:hover .col-hint { opacity: 1; }
+
+  /* Posiciones (desktop) */
+  .coleccion:nth-child(1) { top: 30px;  left: 2%;   transform: rotate(-4deg); }
+  .coleccion:nth-child(2) { top: 10px;  left: 24%;  transform: rotate(2.5deg); }
+  .coleccion:nth-child(3) { top: 50px;  left: 46%;  transform: rotate(-1.5deg); }
+  .coleccion:nth-child(4) { top: 20px;  left: 68%;  transform: rotate(3.5deg); }
+  .coleccion:nth-child(5) { top: 310px; left: 18%;  transform: rotate(-2deg); }
+
+  .coleccion:nth-child(1):hover { transform: rotate(0) scale(1.07); }
+  .coleccion:nth-child(2):hover { transform: rotate(0) scale(1.07); }
+  .coleccion:nth-child(3):hover { transform: rotate(0) scale(1.07); }
+  .coleccion:nth-child(4):hover { transform: rotate(0) scale(1.07); }
+  .coleccion:nth-child(5):hover { transform: rotate(0) scale(1.07); }
+
+  /* ═══════════════════════════════
+     OVERLAY — fotos que vuelan
+  ═══════════════════════════════ */
+  #overlay {
+    position: fixed; inset: 0;
+    background: rgba(253,248,240,0.97);
+    backdrop-filter: blur(6px);
+    z-index: 500; display: none; overflow: hidden;
+  }
+  #overlay.activo { display: block; }
+
+  #overlay-titulo {
+    position: fixed; top: 1.3rem; left: 50%; transform: translateX(-50%);
+    font-family: 'Sacramento', cursive; font-size: 2.6rem;
+    color: var(--verde-oscuro); z-index: 600;
+    white-space: nowrap; pointer-events: none;
+  }
+  #btn-cerrar {
+    position: fixed; top: 1.4rem; right: 1.8rem;
+    font-family: 'Jost', sans-serif; font-weight: 300;
+    font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--verde-oscuro); background: white;
+    border: 1px solid var(--verde-claro); padding: 0.55rem 1.3rem;
+    cursor: pointer; z-index: 600;
+    box-shadow: 2px 2px 10px rgba(45,74,62,0.15); transition: all 0.3s;
+  }
+  #btn-cerrar:hover { background: var(--verde-oscuro); color: white; }
+
+  .foto-voladora {
+    position: absolute; background: var(--crema);
+    padding: 0.5rem 0.5rem 2.5rem;
+    box-shadow: 3px 4px 18px rgba(45,74,62,0.2);
+    cursor: zoom-in; transition: box-shadow 0.3s;
+  }
+  .foto-voladora:hover { box-shadow: 8px 10px 30px rgba(45,74,62,0.35); z-index: 50; }
+  .foto-voladora img { display: block; width: 100%; object-fit: cover; filter: sepia(5%) contrast(1.03); pointer-events: none; }
+  .foto-voladora .fp-cap { font-family: 'Sacramento', cursive; font-size: 1.1rem; color: var(--cafe); text-align: center; padding-top: 0.4rem; }
+
+  @keyframes volar {
+    from { opacity: 0; transform: var(--desde) scale(0.3) rotate(var(--rot-ini)); }
+    to   { opacity: 1; transform: translate(0,0) scale(1) rotate(var(--rot-fin)); }
+  }
+
+  /* ═══════════════════════════════
+     LIGHTBOX
+  ═══════════════════════════════ */
+  #lightbox {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.9); z-index: 700;
+    align-items: center; justify-content: center; cursor: zoom-out;
+  }
+  #lightbox.show { display: flex; }
+  #lightbox img { max-width: 90vw; max-height: 88vh; object-fit: contain; box-shadow: 0 0 60px rgba(0,0,0,0.6); }
+  .lb-cap { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); font-family: 'Sacramento', cursive; font-size: 1.8rem; color: var(--verde-claro); white-space: nowrap; }
+  #lb-prev, #lb-next {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    color: white; font-size: 1.5rem; padding: 0.8rem 1.2rem;
+    cursor: pointer; border-radius: 2px; transition: background 0.2s;
+  }
+  #lb-prev { left: 1.5rem; } #lb-next { right: 1.5rem; }
+  #lb-prev:hover, #lb-next:hover { background: rgba(255,255,255,0.28); }
+  #lb-close { position: absolute; top: 1.2rem; right: 1.5rem; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; opacity: 0.7; }
+  #lb-close:hover { opacity: 1; }
+
+  /* ═══════════════════════════════
+     CARTA
+  ═══════════════════════════════ */
+  .carta-wrap { padding: 6rem 2rem; background: linear-gradient(180deg, var(--crema) 0%, #edf3ee 100%); }
+  .carta-box {
+    max-width: 640px; margin: 0 auto;
+    background: white; padding: 4rem 3.5rem;
+    position: relative;
+    box-shadow: 0 4px 40px rgba(45,74,62,0.1);
+    border-top: 4px solid var(--dorado);
+  }
+  .carta-box::before { content: '👑'; position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 1.5rem; background: white; padding: 0 0.5rem; }
+  .carta-tit    { font-family: 'Sacramento', cursive; font-size: 2.5rem; color: var(--verde-oscuro); text-align: center; margin-bottom: 2rem; }
+  .linea-c      { width: 100%; height: 1px; background: linear-gradient(90deg,transparent,var(--verde-claro),transparent); margin: 1.8rem 0; }
+  .carta-cuerpo { font-size: 1.15rem; line-height: 2.1; color: #4a3f38; font-style: italic; font-weight: 300; white-space: pre-line; min-height: 60px; }
+  .carta-firma  { font-family: 'Sacramento', cursive; font-size: 2rem; color: var(--verde-medio); text-align: right; margin-top: 1.5rem; }
+
+  /* ═══════════════════════════════
+     MÚSICA
+  ═══════════════════════════════ */
+  .musica-wrap  { padding: 4rem 2rem; background: var(--beige); text-align: center; }
+  .musica-tit   { font-family: 'Sacramento', cursive; font-size: 2.5rem; color: var(--verde-oscuro); margin-bottom: 0.4rem; }
+  .musica-sub   { color: var(--cafe); font-style: italic; font-size: 0.95rem; margin-bottom: 2rem; }
+  .musica-row   { display: flex; gap: 0.8rem; max-width: 540px; margin: 0 auto 2rem; flex-wrap: wrap; justify-content: center; }
+  .musica-input { flex: 1; min-width: 200px; padding: 0.8rem 1.2rem; border: 1.5px solid var(--verde-claro); background: white; font-family: 'Jost', sans-serif; font-size: 0.9rem; outline: none; color: var(--verde-oscuro); transition: border-color 0.3s; }
+  .musica-input:focus { border-color: var(--verde-medio); }
+  .btn-rep      { padding: 0.8rem 1.5rem; background: var(--verde-oscuro); color: var(--verde-claro); border: none; font-family: 'Jost', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; }
+  .btn-rep:hover { background: var(--verde-medio); }
+  #yt-player    { max-width: 540px; margin: 0 auto; overflow: hidden; box-shadow: 0 4px 20px rgba(45,74,62,0.15); }
+  #yt-player iframe { width: 100%; height: 300px; border: none; display: block; }
+
+  /* ═══════════════════════════════
+     CIERRE
+  ═══════════════════════════════ */
+  .cierre-wrap {
+    min-height: 65vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 5rem 2rem;
+    background: var(--verde-oscuro); position: relative; overflow: hidden;
+  }
+  .petalo { position: absolute; animation: caer linear infinite; opacity: 0; pointer-events: none; }
+  @keyframes caer { 0%{ transform:translateY(-40px) rotate(0deg); opacity:0.9; } 100%{ transform:translateY(110vh) rotate(720deg); opacity:0; } }
+  .cierre-tit   { font-family: 'Sacramento', cursive; font-size: clamp(2.5rem,7vw,5rem); color: var(--verde-claro); line-height: 1.35; position: relative; z-index: 1; }
+  .cierre-sub   { font-size: 1.1rem; color: var(--verde-salvia); font-style: italic; margin-top: 1.5rem; max-width: 420px; line-height: 1.8; position: relative; z-index: 1; }
+  .cierre-heart { font-size: 3rem; margin-top: 2rem; animation: latir 1.5s ease-in-out infinite; position: relative; z-index: 1; }
+  @keyframes latir { 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.15); } }
+
+  .fs { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .fs.vis { opacity: 1; transform: translateY(0); }
+
+  /* ═══════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════ */
+  @media(max-width: 760px){
+    .tablero { min-height: 1080px; }
+    .coleccion { width: 148px; }
+    .coleccion:nth-child(1){ top: 20px;  left: 2%;  }
+    .coleccion:nth-child(2){ top: 20px;  left: 50%; }
+    .coleccion:nth-child(3){ top: 250px; left: 2%;  }
+    .coleccion:nth-child(4){ top: 250px; left: 50%; }
+    .coleccion:nth-child(5){ top: 490px; left: 22%; }
+    .carta-box { padding: 3rem 1.5rem; }
+    #lb-prev, #lb-next { padding: 0.5rem 0.8rem; font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="canvas-hojas"></canvas>
+
+<!-- ══ INTRO ══ -->
+<div id="intro">
+  <div class="flores-intro">
+  <span>🌿</span>
+  <span>🌸</span>
+  <span>🌿</span>
+</div>
+  <div class="texto-intro">Para ti, Katerine...</div>
+  <button class="btn-abrir" onclick="abrirPagina()">Bienvenida 🌿</button>
+</div>
+
+<!-- ══ OVERLAY FOTOS VOLANDO ══ -->
+<div id="overlay">
+  <div id="overlay-titulo"></div>
+  <button id="btn-cerrar" onclick="cerrarOverlay()">✕ &nbsp;Volver</button>
+</div>
+
+<!-- ══ LIGHTBOX ══ -->
+<div id="lightbox" onclick="cerrarLightbox(event)">
+  <button id="lb-close" onclick="cerrarLightbox()">✕</button>
+  <button id="lb-prev"  onclick="event.stopPropagation();moverLB(-1)">‹</button>
+  <img id="lb-img" src="" alt="Katerine">
+  <button id="lb-next"  onclick="event.stopPropagation();moverLB(1)">›</button>
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="deco-hero">✦ &nbsp; Hoy es tu día &nbsp; ✦</div>
+    <h1 class="nombre-hero">Katerine</h1>
+    <div class="linea-deco"></div>
+    <p class="sub-hero">Feliz Cumpleaños, alma hermosa.<br>Hoy el mundo celebra el día que llegaste a él.</p>
+    <div class="emojis-hero">🎈 🌿 🌼</div>
+    <div class="marco-cumple">
+  <img class="col-portada1" src="fotos/portada-2.jpg" alt="" onclick="abrirImagen(this)">
+</div>
+  </section>
+
+  <!-- ADMIRO -->
+  <section class="seccion fs">
+    <h2 class="titulo-sec">— John Lennon -</h2>
+    <p class="sub-sec">“Cuenta tu edad por amigos, no por años. Cuenta tu vida por sonrisas, no por lágrimas.” </p>
+    <div class="cards-grid">
+      <div class="card"><div class="ic"><img class="col-portada" src="fotos/portada2.1.jpeg" alt="" onclick="abrirImagen(this)"></div><div class="tx">Sueña en grande</div></div>
+      <div class="card"><div class="ic"> <img class="col-portada" src="fotos/portada2.2.jpeg" alt="" onclick="abrirImagen(this)"></div><div class="tx">No dejes de brillar</div></div>
+      <div class="card"><div class="ic"><img class="col-portada" src="fotos/portada2.3.jpeg" alt="" onclick="abrirImagen(this)"></div><div class="tx">Vive la vida</div></div>
+      <div class="card"><div class="ic"><img class="col-portada" src="fotos/portada2.4.jpg" alt="" onclick="abrirImagen(this)"></div><div class="tx">Un dia a a la vez</div></div>
+      <div class="card"><div class="ic"><img class="col-portada" src="fotos/portada2.5.jpg" alt="" onclick="abrirImagen(this)"></div><div class="tx">Vive feliz</div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ÁLBUM — 5 COLECCIONES DISPERSAS
+       ══════════════════════════════════════════
+       Para personalizar: edita el emoji, nombre
+       y las fotos de cada colección en el JS.
+  ══════════════════════════════════════════════ -->
+  <section class="album-wrap">
+    <h2 class="album-tit">Para no olvidar</h2>
+    <p class="album-sub">Elige un momento y revívelo 🌿 — haz clic en cualquier colección</p>
+
+    <div class="tablero">
+
+      <!-- COLECCIÓN 1 ─────────────────── -->
+      <div class="coleccion" onclick="abrirColeccion(0)">
+        <div class="col-cinta"></div>
+        <!--
+          Si tienes foto de portada, reemplaza el emoji por:
+          <img class="col-portada" src="fotos/portada-1.jpg" alt="">
+        -->
+        <div class="col-emoji"><img class="col-portada" src="fotos/portada-1.jpg" alt=""></div>
+        <div class="col-nombre">Momentos especiales</div>
+        <div class="col-cant" id="cant-0"></div>
+        <div class="col-hint">clic para abrir ✦</div>
+      </div>
+
+      <!-- COLECCIÓN 2 ─────────────────── -->
+      <div class="coleccion" onclick="abrirColeccion(1)">
+        <div class="col-cinta"></div>
+        <div class="col-emoji"><img class="col-portada" src="fotos/portada-3.jpg" alt=""></div>
+        <div class="col-nombre">Que se repita</div>
+        <div class="col-cant" id="cant-1"></div>
+        <div class="col-hint">clic para abrir ✦</div>
+      </div>
+
+      <!-- COLECCIÓN 3 ─────────────────── -->
+      <div class="coleccion" onclick="abrirColeccion(2)">
+        <div class="col-cinta"></div>
+        <div class="col-emoji"><img class="col-portada" src="fotos/portada-4.jpg" alt=""></div>
+        <div class="col-nombre">Cool</div>
+        <div class="col-cant" id="cant-2"></div>
+        <div class="col-hint">clic para abrir ✦</div>
+      </div>
+
+      <!-- COLECCIÓN 4 ─────────────────── -->
+      <div class="coleccion" onclick="abrirColeccion(3)">
+        <div class="col-cinta"></div>
+        <div class="col-emoji"><img class="col-portada" src="fotos/portada-5.jpg" alt=""></div>
+        <div class="col-nombre">Visca barca</div>
+        <div class="col-cant" id="cant-3"></div>
+        <div class="col-hint">clic para abrir ✦</div>
+      </div>
+
+      <!-- COLECCIÓN 5 ─────────────────── -->
+      <div class="coleccion" onclick="abrirColeccion(4)">
+        <div class="col-cinta"></div>
+        <div class="col-emoji"><img class="col-portada" src="fotos/portada-6.jpg" alt=""></div>
+        <div class="col-nombre">Visca catalunya</div>
+        <div class="col-cant" id="cant-4"></div>
+        <div class="col-hint">clic para abrir ✦</div>
+      </div>
+
+    </div><!-- /tablero -->
+  </section>
+
+  <!-- CARTA -->
+  <section class="carta-wrap fs">
+    <div class="carta-box">
+      <h2 class="carta-tit">Una carta para ti</h2>
+      <div class="linea-c"></div>
+      <p class="carta-cuerpo" id="carta-cuerpo"></p>
+      <div class="linea-c"></div>
+      <div class="carta-firma">Con todo el cariño 🌿</div>
+    </div>
+  </section>
+
+  <!-- MÚSICA -->
+  <section class="musica-wrap fs">
+    <h2 class="musica-tit">🎥🔞</h2>
+    <p class="musica-sub">La vida es todos los días, la muerte es una sola vez</p>
+      <div class="musica-row">
+  <button class="btn-rep" onclick="document.getElementById('mivideo').play()">
+    ▶ Reproducir video
+  </button>
+</div>
+
+<div id="yt-player">
+  <video id="mivideo" controls>
+    <source src="videos/mivideo.mp4" type="video/mp4">
+    Tu navegador no soporta video.
+  </video>
+</div>
+  <!-- CIERRE -->
+  <section class="cierre-wrap" id="cierre">
+    <div class="cierre-tit">Que este año te<br>traiga todo lo<br>que mereces 🌿</div>
+    <p class="cierre-sub">Disfruta cada uno de tus días, Katerine.<br>Eres más especial de lo que imaginas.</p>
+    <div class="cierre-heart">🌸</div>
+  </section>
+
+</main>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   🖼️  COLECCIONES — EDITA AQUÍ TUS FOTOS
+   ══════════════════════════════════════════════════════════════
+   Estructura de carpetas:
+     fotos/
+       col1/foto1.jpg  foto2.jpg  foto3.jpg ...
+       col2/foto1.jpg  ...
+       col3/ ...
+       col4/ ...
+       col5/ ...
+
+   Agrega tantas fotos como quieras en cada colección.
+   Solo copia y pega más líneas { src: ..., cap: ... }
+══════════════════════════════════════════════════════════════ */
+const COLECCIONES = [
+
+  /* ── 0 · Momentos especiales ── */
+  { nombre: "Momentos especiales", fotos: [
+    { src: "fotos/col1/foto1.jpg", cap: " 🌸" },
+    { src: "fotos/col1/foto2.jpg", cap: " 🌿" },
+    { src: "fotos/col1/foto3.jpg", cap: "✨" },
+    { src: "fotos/col1/foto4.jpg", cap: " 💚" },
+    { src: "fotos/col1/foto5.jpg", cap: " 💪" },
+    { src: "fotos/col1/foto6.jpg", cap: "🌸" },
+    { src: "fotos/col1/foto7.jpeg", cap: " 🌿" },
+    { src: "fotos/col1/foto8.jpeg", cap: " ✨" },
+    { src: "fotos/col1/foto9.jpeg", cap: "💚" },
+    { src: "fotos/col1/foto10.jpeg", cap: " 💪" }, 
+    { src: "fotos/col1/foto11.jpeg", cap: " ✨" },
+    { src: "fotos/col1/foto12.jpeg", cap: "💚" },
+    { src: "fotos/col1/foto13.jpeg", cap: " 🌺" }, 
+  ]},
+
+  /* ── 1 · Días de sol ── */
+  { nombre: "Que se repita", fotos: [
+    { src: "fotos/col2/foto1.jpg", cap: "☀️" },
+    { src: "fotos/col2/foto2.jpg", cap: "🌼" },
+    { src: "fotos/col2/foto3.jpg", cap: "🌻" },
+    { src: "fotos/col2/foto4.jpg", cap: "✨" },
+    { src: "fotos/col2/foto5.jpg", cap: "🌿" },
+    { src: "fotos/col2/foto6.jpg", cap: "🌼" },
+    { src: "fotos/col2/foto7.jpg", cap: "💚" },
+    { src: "fotos/col2/foto8.jpg", cap: "🌅" },
+     { src: "fotos/col2/foto9.jpeg", cap: " 💪" },
+    { src: "fotos/col2/foto10.jpeg", cap: " 💪" },
+  ]},
+
+  /* ── 2 · Tu fuerza ── */
+  { nombre: "💪🔥🔥", fotos: [
+    { src: "fotos/col3/foto1.jpg", cap: "💪" },
+    { src: "fotos/col3/foto2.jpg", cap: "🔥" },
+    { src: "fotos/col3/foto3.jpg", cap: " 🌿" },
+    { src: "fotos/col3/foto4.jpg", cap: "✨" },
+    { src: "fotos/col3/foto5.jpg", cap: " 💪" },
+    { src: "fotos/col3/foto6.jpg", cap: " 💚" },
+    { src: "fotos/col3/foto7.jpg", cap: " 🌿" },
+    { src: "fotos/col3/foto8.jpg", cap: "✨" },
+    { src: "fotos/col3/foto9.jpeg", cap: " 🌸" },
+    { src: "fotos/col3/foto10.jpeg", cap: " 💚" },
+  ]},
+
+  /* ── 3 · Naturaleza contigo ── */
+  { nombre: "🌱🍃", fotos: [
+    { src: "fotos/col4/foto1.jpg", cap: "🍃" },
+    { src: "fotos/col4/foto2.jpg", cap: " 🌺" },
+    { src: "fotos/col4/foto3.jpeg", cap: "🌿" },
+    { src: "fotos/col4/foto4.jpg", cap: " 🌱" },
+    { src: "fotos/col4/foto5.jpg", cap: " 🍃" },
+    { src: "fotos/col4/foto6.jpg", cap: "🌺" },
+    { src: "fotos/col4/foto7.jpg", cap: " 🌿" },
+    { src: "fotos/col4/foto8.jpeg", cap: "🌱" },
+    { src: "fotos/col4/foto9.jpeg", cap: "🍃" },
+    { src: "fotos/col4/foto10.jpeg", cap: "🌺" },
+    ]},
+
+  /* ── 4 · Mis favoritas ── */
+  { nombre: "💚🌿", fotos: [
+    { src: "fotos/col5/foto1.jpg", cap: "🌸" },
+    { src: "fotos/col5/foto2.jpg", cap: " 💚" },
+    { src: "fotos/col5/foto3.jpg", cap: " 🌿" },
+    { src: "fotos/col5/foto4.jpg", cap: " ✨" },
+    { src: "fotos/col5/foto5.jpg", cap: "🌺" },
+    { src: "fotos/col5/foto6.jpg", cap: " 🌸" },
+    { src: "fotos/col5/foto7.jpeg", cap: " 💚" },
+    { src: "fotos/col5/foto8.jpeg", cap: " 🌿" },
+    { src: "fotos/col5/foto9.jpeg", cap: " ✨" },
+    { src: "fotos/col5/foto10.jpeg", cap: "🌺" },
+  ]},
+
+];
+
+/* Conteo automático en cada tarjeta */
+COLECCIONES.forEach((col, i) => {
+  const el = document.getElementById('cant-' + i);
+  if(el) el.textContent = col.fotos.length + ' fotos';
+});
+
+/* ══ CANVAS HOJAS ══ */
+const cv = document.getElementById('canvas-hojas');
+const cx = cv.getContext('2d');
+function resizeCanvas(){ cv.width = innerWidth; cv.height = innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+const EMOJIS = ['🍃','🌿','🍀','🌱','🌸','🌼','🎈','🥳','🎁'];
+const hojas = Array.from({length:20}, () => crearHoja(true));
+function crearHoja(rand){
+  return { x:Math.random()*innerWidth, y:rand?Math.random()*innerHeight:-30,
+    e:EMOJIS[Math.floor(Math.random()*EMOJIS.length)], sz:12+Math.random()*16,
+    vy:0.5+Math.random()*1.2, vx:(Math.random()-.5)*.8,
+    rot:Math.random()*360, rv:(Math.random()-.5)*1.5, op:0.6+Math.random()*.4 };
+}
+(function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  hojas.forEach((h,i)=>{
+    cx.save(); cx.globalAlpha=h.op; cx.translate(h.x,h.y);
+    cx.rotate(h.rot*Math.PI/180); cx.font=h.sz+'px serif';
+    cx.fillText(h.e,-h.sz/2,h.sz/2); cx.restore();
+    h.y+=h.vy; h.x+=h.vx; h.rot+=h.rv;
+    if(h.y>innerHeight+30) hojas[i]=crearHoja(false);
+  });
+  requestAnimationFrame(loop);
+})();
+
+/* ══ INTRO ══ */
+function abrirPagina(){
+  document.getElementById('intro').classList.add('oculto');
+  crearPetalos();
+}
+
+/* ══ SCROLL OBSERVER ══ */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('vis');
+      e.target.querySelectorAll('.card').forEach((c,i)=>{
+        setTimeout(()=>c.classList.add('vis'), i*120);
+      });
+    }
+  });
+}, {threshold:0.15});
+document.querySelectorAll('.fs').forEach(el => obs.observe(el));
+
+/* ══ CARTA ══ */
+const CARTA = `Katerine,
+
+Hoy la vida te sonríe de una forma especial, porque no todos tienen la fortuna de estar rodeados de personas que los quieren de verdad.
+
+Hoy la vida te premia con buenos amigos, con momentos que valen la pena y con recuerdos que se quedan para siempre.
+
+Disfruta cada uno de tus días, ríe sin medida y sigue siendo esa persona tan especial que ilumina a quienes la rodean.
+
+Te deseamos lo mejor hoy y siempre, que este nuevo año venga lleno de bendiciones, alegrías y sueños cumplidos.
+
+Para este nuevo año que empieza para ti, te deseo mil bendiciones. Que la vida te premie con todo lo que mereces, que el futuro que te espera sea tan maravilloso como tú.
+
+
+Disfruta cada uno de tus días, Katerine.
+Feliz cumpleaños  🌿`;
+
+
+let cartaIniciada = false;
+function escribirCarta(){
+  if(cartaIniciada) return; cartaIniciada = true;
+  const el = document.getElementById('carta-cuerpo');
+  let i = 0;
+  const t = setInterval(()=>{ el.textContent=CARTA.slice(0,i); i++; if(i>CARTA.length) clearInterval(t); }, 16);
+}
+const cartaObs = new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){ escribirCarta(); cartaObs.disconnect(); }
+},{threshold:0.25});
+cartaObs.observe(document.querySelector('.carta-wrap'));
+
+/* ══ ABRIR COLECCIÓN — fotos que vuelan ══ */
+let lbItems=[], lbIndex=0;
+
+function abrirColeccion(idx){
+  const col = COLECCIONES[idx];
+  const overlay = document.getElementById('overlay');
+  overlay.querySelectorAll('.foto-voladora').forEach(el=>el.remove());
+  document.getElementById('overlay-titulo').textContent = col.nombre;
+  overlay.classList.add('activo');
+  document.body.style.overflow='hidden';
+  lbItems = col.fotos;
+
+  const sizes = [130,155,170,142,160,148];
+
+  col.fotos.forEach((foto,i)=>{
+    const el = document.createElement('div');
+    el.className = 'foto-voladora';
+    const sz = sizes[i % sizes.length];
+    el.style.width = sz+'px';
+
+    const maxX = Math.max(window.innerWidth-sz-50,50);
+    const maxY = Math.max(window.innerHeight-sz-110,50);
+    const fx = 30+Math.random()*maxX;
+    const fy = 75+Math.random()*maxY;
+    const rotFin = (Math.random()-.5)*24;
+    const rotIni = (Math.random()-.5)*70;
+    const ox = window.innerWidth/2-fx-sz/2;
+    const oy = window.innerHeight/2-fy-sz/2;
+
+    el.style.left=fx+'px'; el.style.top=fy+'px';
+    el.style.setProperty('--rot-fin',rotFin+'deg');
+    el.style.setProperty('--rot-ini',rotIni+'deg');
+    el.style.setProperty('--desde',`translate(${ox}px,${oy}px)`);
+    el.style.animation=`volar 0.65s cubic-bezier(0.23,1,0.32,1) ${i*0.09}s both`;
+    el.style.transform=`rotate(${rotFin}deg)`;
+    el.style.zIndex=10+i;
+
+    const img = document.createElement('img');
+    img.src=foto.src; img.alt=foto.cap;
+    img.style.height=sz+'px';
+    img.onerror=()=>{ img.style.background='#e8f0eb'; img.style.minHeight=sz+'px'; };
+
+    const cap = document.createElement('div');
+    cap.className='fp-cap'; cap.textContent=foto.cap;
+
+    el.appendChild(img); el.appendChild(cap);
+    el.addEventListener('click',()=>{ lbIndex=i; mostrarLB(); });
+    hacerArrastrable(el);
+    overlay.appendChild(el);
+  });
+}
+
+function hacerArrastrable(el){
+  let sx=0,sy=0,ox=0,oy=0,drag=false;
+  el.addEventListener('mousedown',e=>{ drag=true; sx=e.clientX; sy=e.clientY; ox=parseInt(el.style.left)||0; oy=parseInt(el.style.top)||0; el.style.transition='none'; el.style.zIndex=999; e.preventDefault(); });
+  window.addEventListener('mousemove',e=>{ if(!drag)return; el.style.left=(ox+e.clientX-sx)+'px'; el.style.top=(oy+e.clientY-sy)+'px'; });
+  window.addEventListener('mouseup',()=>{ drag=false; });
+  el.addEventListener('touchstart',e=>{ const t=e.touches[0]; sx=t.clientX; sy=t.clientY; ox=parseInt(el.style.left)||0; oy=parseInt(el.style.top)||0; el.style.transition='none'; el.style.zIndex=999; },{passive:true});
+  el.addEventListener('touchmove',e=>{ const t=e.touches[0]; el.style.left=(ox+t.clientX-sx)+'px'; el.style.top=(oy+t.clientY-sy)+'px'; e.preventDefault(); },{passive:false});
+}
+
+function cerrarOverlay(){
+  document.getElementById('overlay').classList.remove('activo');
+  document.body.style.overflow='';
+}
+
+/* ══ LIGHTBOX ══ */
+function mostrarLB(){
+  document.getElementById('lb-img').src=lbItems[lbIndex].src;
+  document.getElementById('lb-cap').textContent=lbItems[lbIndex].cap;
+  document.getElementById('lightbox').classList.add('show');
+}
+function abrirImagen(img){
+  document.getElementById('lb-img').src = img.src;
+  document.getElementById('lb-cap').textContent = img.alt || "";
+  document.getElementById('lightbox').classList.add('show');
+}
+function moverLB(dir){ lbIndex=(lbIndex+dir+lbItems.length)%lbItems.length; mostrarLB(); }
+function cerrarLightbox(e){
+  if(!e||e.target===document.getElementById('lightbox')||e.target===document.getElementById('lb-close')){
+    document.getElementById('lightbox').classList.remove('show');
+  }
+}
+
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('lightbox').classList.contains('show'))return;
+  if(e.key==='ArrowRight') moverLB(1);
+  if(e.key==='ArrowLeft')  moverLB(-1);
+  if(e.key==='Escape') cerrarLightbox({target:document.getElementById('lightbox')});
+});
+
+/* ══ MÚSICA ══ */
+function cargarMusica(){
+  const url=document.getElementById('yt-url').value.trim(); if(!url)return;
+  let id='';
+  try{ const p=new URL(url); id=p.searchParams.get('v')||p.pathname.split('/').pop(); }catch(e){return;}
+  document.getElementById('yt-player').innerHTML=
+    `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&controls=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+}
+
+/* ══ PÉTALOS ══ */
+function crearPetalos(){
+  const sec=document.getElementById('cierre');
+  ['🌸','🌺','🌼','🍀','🌸','🌿'].forEach(em=>{
+    for(let i=0;i<4;i++){
+      const p=document.createElement('div'); p.className='petalo'; p.textContent=em;
+      p.style.cssText=`left:${Math.random()*100}%;font-size:${0.7+Math.random()}rem;animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*8}s;`;
+      sec.appendChild(p);
+    }
+  });
+}
+</script>
+</body>
+</html>
